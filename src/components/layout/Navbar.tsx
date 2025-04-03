@@ -69,6 +69,13 @@ export const Navbar = () => {
                 >
                   Track Order
                 </Link>
+                <Link 
+                  to="/notifications" 
+                  className={cn("text-lg font-semibold hover:text-shop-primary", 
+                    isActive("/notifications") && "text-shop-primary")}
+                >
+                  Notifications
+                </Link>
               </nav>
               <div className="mt-8 flex flex-col gap-2">
                 <Button variant="outline" className="w-full justify-start gap-2">
@@ -133,13 +140,28 @@ export const Navbar = () => {
               <span className="sr-only">Favorites</span>
             </Link>
           </Button>
-          <Button variant="ghost" size="icon" asChild className="hidden sm:flex">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            asChild 
+            className={cn(isActive("/notifications") && "bg-gray-100")}
+          >
             <Link to="/notifications">
-              <Bell className="h-5 w-5" />
+              <div className="relative">
+                <Bell className="h-5 w-5" />
+                <span className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-shop-primary text-white text-xs flex items-center justify-center">
+                  3
+                </span>
+              </div>
               <span className="sr-only">Notifications</span>
             </Link>
           </Button>
-          <Button variant="ghost" size="icon" asChild>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            asChild
+            className={cn(isActive("/track-order") && "bg-gray-100")}
+          >
             <Link to="/track-order">
               <Package className="h-5 w-5" />
               <span className="sr-only">Orders</span>
