@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { 
   ShoppingCart, Search, User, Menu, X, LogIn, 
   Package, Bell, Heart 
@@ -13,6 +13,12 @@ import { cn } from "@/lib/utils";
 export const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showMobileSearch, setShowMobileSearch] = useState(false);
+  const location = useLocation();
+  
+  // Helper to check if a path is active
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background">
@@ -28,19 +34,39 @@ export const Navbar = () => {
             </SheetTrigger>
             <SheetContent side="left" className="w-[300px] sm:w-[400px]">
               <nav className="flex flex-col gap-4 mt-8">
-                <Link to="/" className="text-lg font-semibold hover:text-shop-primary">
+                <Link 
+                  to="/" 
+                  className={cn("text-lg font-semibold hover:text-shop-primary", 
+                    isActive("/") && "text-shop-primary")}
+                >
                   Home
                 </Link>
-                <Link to="/services" className="text-lg font-semibold hover:text-shop-primary">
+                <Link 
+                  to="/services" 
+                  className={cn("text-lg font-semibold hover:text-shop-primary", 
+                    isActive("/services") && "text-shop-primary")}
+                >
                   Services
                 </Link>
-                <Link to="/about" className="text-lg font-semibold hover:text-shop-primary">
+                <Link 
+                  to="/about" 
+                  className={cn("text-lg font-semibold hover:text-shop-primary", 
+                    isActive("/about") && "text-shop-primary")}
+                >
                   About Us
                 </Link>
-                <Link to="/contact" className="text-lg font-semibold hover:text-shop-primary">
+                <Link 
+                  to="/contact" 
+                  className={cn("text-lg font-semibold hover:text-shop-primary", 
+                    isActive("/contact") && "text-shop-primary")}
+                >
                   Contact
                 </Link>
-                <Link to="/track-order" className="text-lg font-semibold hover:text-shop-primary">
+                <Link 
+                  to="/track-order" 
+                  className={cn("text-lg font-semibold hover:text-shop-primary", 
+                    isActive("/track-order") && "text-shop-primary")}
+                >
                   Track Order
                 </Link>
               </nav>
@@ -114,12 +140,17 @@ export const Navbar = () => {
             </Link>
           </Button>
           <Button variant="ghost" size="icon" asChild>
-            <Link to="/orders">
+            <Link to="/track-order">
               <Package className="h-5 w-5" />
               <span className="sr-only">Orders</span>
             </Link>
           </Button>
-          <Button variant="ghost" size="icon" asChild>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            asChild
+            className={cn(isActive("/cart") && "bg-gray-100")}
+          >
             <Link to="/cart">
               <div className="relative">
                 <ShoppingCart className="h-5 w-5" />
